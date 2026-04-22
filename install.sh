@@ -193,6 +193,22 @@ KK_BACKEND="qwen3"
 QWEN3_ASR_SCRIPT="\$HOME/.config/kt-recorder/qwen3_asr.py"
 WHISPER_KK_MODEL="\$HOME/whisper-models/ggml-base-kk.bin"
 
+# === Саммаризация (scripts/summarize.sh) ====================================
+# Превращает транскрипт в структурированный протокол встречи.
+#
+#   ollama — локально (Qwen3:32B рекомендуется для M-серии Mac с 24+ GB RAM,
+#            Qwen3:14B для более лёгких машин). Бесплатно, приватно.
+#   claude — через Anthropic API (лучшее качество, нужен ANTHROPIC_API_KEY).
+#            Примерно \$0.02-0.05 за часовую встречу на Sonnet.
+SUMMARIZER_BACKEND="ollama"
+SUMMARIZER_MODEL="qwen3:32b"
+# SUMMARIZER_MODEL="claude-sonnet-4-5-20250514"   # для backend=claude
+# ANTHROPIC_API_KEY="sk-ant-..."                    # для backend=claude
+
+# Путь к кастомному промпту для саммаризатора (опционально).
+# По умолчанию используется встроенный промпт в scripts/summarize.sh.
+SUMMARIZER_PROMPT_FILE="\$HOME/.config/kt-recorder/summarize_prompt.txt"
+
 # Форматы экспорта через запятую: txt, vtt, srt, json
 OUTPUT_FORMATS="txt,vtt"
 

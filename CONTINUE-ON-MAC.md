@@ -92,6 +92,41 @@ bash scripts/setup-qwen3.sh
 Подробности и альтернативы (whisper-base.kk для чистого казахского) — в
 [docs/custom-models.md](docs/custom-models.md#-казахский--kkru-code-switching).
 
+## 📝 Саммаризация встреч
+
+Новый скрипт `scripts/summarize.sh` делает из транскрипта структурированный
+протокол — участники, проекты с деталями, цитаты, таблицы, action items.
+
+### Локально через Ollama (рекомендуется)
+
+```bash
+brew install ollama
+ollama pull qwen3:32b        # ~20 GB, для M4 Pro 24GB идеально
+# или для лёгкого старта:
+ollama pull qwen3:14b        # ~9 GB
+
+# в config.sh:
+SUMMARIZER_BACKEND="ollama"
+SUMMARIZER_MODEL="qwen3:32b"
+```
+
+### Через Anthropic API (топовое качество)
+
+```bash
+# в config.sh:
+SUMMARIZER_BACKEND="claude"
+SUMMARIZER_MODEL="claude-sonnet-4-5-20250514"
+ANTHROPIC_API_KEY="sk-ant-..."
+```
+
+### Использование
+
+```bash
+# после того как transcribe-auto.sh закончил:
+./scripts/summarize.sh ~/Recordings/meeting-2026-04-22/meeting-2026-04-22.md
+# результат: meeting-2026-04-22-summary.md рядом с исходником
+```
+
 ## 📌 Что ещё на потом
 
 - [ ] Записать демо-гифку → `assets/demo.gif` (см. TODO в README)
