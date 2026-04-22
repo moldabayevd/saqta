@@ -64,6 +64,83 @@ launchctl kickstart -k gui/$(id -u)/com.ktrecorder.autotranscribe
 
 Полный список — [в документации Whisper](https://github.com/openai/whisper#available-models-and-languages).
 
+## 🇰🇿 Казахский / kk+ru code-switching
+
+Если встречи идут на казахском, или смешиваются kk+ru в одной фразе — vanilla
+`ggml-large-v3` выдаёт WER 30-77% (подтверждено свежими бенчмарками MDPI 2025).
+Не юзабельно. Решение: отдельный бэкенд только для казахских записей, русские
+встречи остаются на текущем whisper-пайплайне без изменений.
+
+### Роутер
+
+`scripts/transcribe-auto.sh` автодетектит язык по первым 30 сек и кидает файл
+на нужный бэкенд:
+
+```
+ru / en / de / fr / ...  → transcribe-file.sh (whisper large-v3, без изменений)
+kk / mix / tt / ky / uz  → transcribe-kk.sh  (Qwen3-ASR или whisper-base.kk)
+```
+
+### Вариант A — Qwen3-ASR-1.7B (рекомендуется для kk+ru микса)
+
+Специально умеет code-switching (переключение языка внутри фразы). Лучший
+выбор если на встрече реально говорят «қазақша сөйлеп тұрып кинули английское
+слово».
+
+```bash
+bash scripts/setup-qwen3.sh
+# поставит venv в ~/.config/kt-recorder/.qwen3-venv
+# и qwen3_asr.py в ~/.config/kt-recorder/
+
+# в config.sh:
+KK_BACKEND="qwen3"
+```
+
+Первый запуск скачает модель (~4 GB) в `~/.cache/huggingface`. На M4 Pro
+работает быстрее реалтайма.
+
+### Вариант B — whisper-base.kk (чистый казахский)
+
+Если встречи **только** на казахском, без русских вставок — быстрее и точнее
+Qwen3.
+
+```bash
+# скачать и сконвертить в ggml
+git lfs install
+git clone https://huggingface.co/akuzdeuov/whisper-base.kk /tmp/kk-model
+python ~/whisper.cpp/models/convert-h5-to-ggml.py \
+       /tmp/kk-model \
+       ~/whisper-models/ggml-base-kk.bin
+
+# в config.sh:
+KK_BACKEND="whisper-kk"
+```
+
+WER 15.36% на KSC2 test set. Русские слова мангалит — не для смешанных встреч.
+
+### Вариант C — baseline (ничего не ставить)
+
+В `config.sh`:
+```bash
+KK_BACKEND="whisper"
+```
+
+Будет использовать твой основной `WHISPER_MODEL` с флагом `-l kk`. Качество
+слабое, но работает прямо сейчас без лишних зависимостей.
+
+### Использование
+
+```bash
+# автодетект — сам выберет бэкенд
+./scripts/transcribe-auto.sh ~/Recordings/meeting.mp4
+
+# форснуть казахский
+./scripts/transcribe-auto.sh ~/Recordings/meeting.mp4 kk
+
+# форснуть русский (пойдёт по старому пайплайну)
+./scripts/transcribe-auto.sh ~/Recordings/meeting.mp4 ru
+```
+
 ## CoreML-ускорение (опционально)
 
 На Apple Silicon whisper.cpp может использовать Apple Neural Engine через CoreML-обёртки моделей — это даёт прирост ~3× к Metal.

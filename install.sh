@@ -180,6 +180,19 @@ WHISPER_MODEL="$DEFAULT_MODEL"
 # Язык транскрибации: ru, en, de, fr, es, auto, ...
 WHISPER_LANG="ru"
 
+# === Казахский / kk+ru code-switching =======================================
+# Бэкенд для транскрибации казахских и смешанных kk+ru записей.
+# Роутер (scripts/transcribe-auto.sh) сам выберет его когда detect-lang
+# вернёт kk или mix. Для чисто русских записей ничего не меняется.
+#
+#   qwen3      — Qwen3-ASR-1.7B, лучший для смеси kk+ru (поставь через
+#                bash scripts/setup-qwen3.sh)
+#   whisper-kk — whisper-base.kk (только чистый казахский)
+#   whisper    — fallback на основной WHISPER_MODEL с -l kk
+KK_BACKEND="qwen3"
+QWEN3_ASR_SCRIPT="\$HOME/.config/kt-recorder/qwen3_asr.py"
+WHISPER_KK_MODEL="\$HOME/whisper-models/ggml-base-kk.bin"
+
 # Форматы экспорта через запятую: txt, vtt, srt, json
 OUTPUT_FORMATS="txt,vtt"
 

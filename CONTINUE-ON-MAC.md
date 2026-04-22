@@ -68,6 +68,30 @@ git commit -m "описание"
 git push
 ```
 
+## 🇰🇿 Казахские / смешанные kk+ru встречи
+
+Роутер уже добавлен — `scripts/transcribe-auto.sh` автодетектит язык и
+раскидывает по бэкендам: русские записи остаются на твоём `whisper large-v3`
+как сейчас, казахские/смешанные уходят на Qwen3-ASR.
+
+Установка Qwen3-ASR (один раз):
+
+```bash
+bash scripts/setup-qwen3.sh
+# скачает transformers + torch в venv
+# первая транскрибация подтянет модель Qwen3-ASR-1.7B (~4 GB)
+```
+
+Использование:
+
+```bash
+./scripts/transcribe-auto.sh ~/Recordings/meeting.mp4
+# сам определит язык и выберет бэкенд
+```
+
+Подробности и альтернативы (whisper-base.kk для чистого казахского) — в
+[docs/custom-models.md](docs/custom-models.md#-казахский--kkru-code-switching).
+
 ## 📌 Что ещё на потом
 
 - [ ] Записать демо-гифку → `assets/demo.gif` (см. TODO в README)
