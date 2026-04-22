@@ -11,6 +11,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](LICENSE)
 [![Whisper](https://img.shields.io/badge/powered%20by-whisper.cpp-74aa9c?style=flat-square)](https://github.com/ggml-org/whisper.cpp)
 [![Made with Bash](https://img.shields.io/badge/made%20with-Bash-4EAA25?style=flat-square&logo=gnubash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![Languages](https://img.shields.io/badge/languages-RU%20%7C%20EN%20%7C%20KK%20%7C%20kk%2Bru-blue?style=flat-square)](docs/custom-models.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
 
 [**Установка**](#-установка) • [**Как работает**](#-как-это-работает) • [**Конфигурация**](#️-конфигурация) • [**FAQ**](#-faq) • [**Contributing**](CONTRIBUTING.md)
@@ -43,6 +44,8 @@
 - **Метал-ускорение** на Apple Silicon через whisper.cpp
 - **Разделённые аудиодорожки** — твой голос и собеседник отдельно
 - **Русский язык из коробки** с моделью Large-v3 (или опционально fine-tune)
+- **Казахский и kk+ru code-switching** через опциональный бэкенд Qwen3-ASR — русские встречи остаются на whisper, смешанные автоматом уходят на модель которая умеет переключаться между языками внутри фразы ([подробнее](docs/custom-models.md#-казахский--kkru-code-switching))
+- **Автороутер языков** — `scripts/transcribe-auto.sh` сам детектит язык и выбирает бэкенд
 - **Markdown + VTT-субтитры** — открывается где угодно, играется в IINA/VLC с субтитрами
 - **Автозапуск** через LaunchAgent, работает молча в фоне
 - **Совместимо с Obsidian** — frontmatter и теги в каждом файле

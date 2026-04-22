@@ -7,9 +7,22 @@
 
 ## [Unreleased]
 
+### Added
+- **Казахский язык и kk+ru code-switching** — новый роутер
+  `scripts/transcribe-auto.sh` автодетектит язык по первым 30 сек и раскидывает
+  записи по бэкендам: ru/en остаются на whisper large-v3 (без изменений),
+  kk/mix уходят на Qwen3-ASR-1.7B (умеет переключаться между языками внутри
+  фразы)
+- `scripts/detect-lang.sh` — определение языка через whisper language detection
+- `scripts/transcribe-kk.sh` — бэкенд для казахского с тремя режимами
+  (`qwen3` / `whisper-kk` / `whisper`)
+- `scripts/setup-qwen3.sh` — установщик Qwen3-ASR в изолированный venv
+- Секция «Казахский / kk+ru code-switching» в `docs/custom-models.md` со
+  сравнением WER для разных вариантов
+
 ### Planned
 - Диаризация спикеров (v0.2)
-- Локальная саммаризация через Ollama (v0.3)
+- Локальная саммаризация через Ollama + Sherkala-8B (v0.3)
 - Swift menu bar app (v0.4)
 
 ## [0.1.0] - 2026-04-22
