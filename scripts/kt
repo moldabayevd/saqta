@@ -397,18 +397,14 @@ action_recordings_list() {
     echo ""
     preview_file "$chosen_file"
 
-    # Меню действий адаптивное
+    # Меню действий — без саммари, только транскрипт + Finder
     local -a actions=()
     if [ -z "$transcript_md" ]; then
-        actions+=("⚡ Полный пайплайн (транскрипция + саммари)")
-        actions+=("🎬 Только транскрибировать")
-    elif [ -z "$summary_md" ]; then
-        actions+=("📝 Сделать саммари из транскрипта")
-        actions+=("🔁 Перетранскрибировать с нуля")
+        actions+=("🎬 Транскрибировать")
     else
         actions+=("📂 Открыть папку встречи")
-        actions+=("👀 Показать саммари")
-        actions+=("🔁 Перезапустить пайплайн")
+        actions+=("📄 Открыть транскрипт (.md)")
+        actions+=("🔁 Перетранскрибировать с нуля")
     fi
     actions+=("⬅  Назад к списку")
 
@@ -416,34 +412,21 @@ action_recordings_list() {
     action=$(printf '%s\n' "${actions[@]}" | gum choose --cursor.foreground "$C_PRIMARY")
 
     case "$action" in
-        *"Полный"*)
-            do_transcribe "$chosen_file" >/dev/null
-            local new_tr=""
-            [ -f "$parent_dir/$name/$name.md" ] && new_tr="$parent_dir/$name/$name.md"
-            [ -n "$new_tr" ] && do_summarize "$new_tr" >/dev/null && post_action_menu "$parent_dir/$name/$name-summary.md"
-            ;;
-        *"Только транскрибировать"*)
+        *"Транскрибировать"*)
             out=$(do_transcribe "$chosen_file")
             [ -n "$out" ] && post_action_menu "$out"
             ;;
-        *"Сделать саммари"*)
-            out=$(do_summarize "$transcript_md")
+        *"Перетранскрибировать"*)
+            gum confirm "Удалить старый транскрипт и запустить заново?" || return
+            [ -n "$transcript_md" ] && rm -f "$transcript_md"
+            out=$(do_transcribe "$chosen_file")
             [ -n "$out" ] && post_action_menu "$out"
             ;;
-        *"Перетранскрибировать"*|*"Перезапустить"*)
-            gum confirm "Удалить старые результаты и запустить заново?" || return
-            [ -n "$transcript_md" ] && rm -f "$transcript_md"
-            [ -n "$summary_md" ] && rm -f "$summary_md"
-            do_transcribe "$chosen_file" >/dev/null
-            local new_tr=""
-            [ -f "$parent_dir/$name/$name.md" ] && new_tr="$parent_dir/$name/$name.md"
-            [ -n "$new_tr" ] && do_summarize "$new_tr" >/dev/null && post_action_menu "$parent_dir/$name/$name-summary.md"
-            ;;
-        *"Открыть папку"*)
+        *"папку"*)
             open_in_finder "$chosen_file"
             ;;
-        *"Показать саммари"*)
-            [ -n "$summary_md" ] && gum pager < "$summary_md"
+        *"транскрипт"*)
+            [ -n "$transcript_md" ] && open "$transcript_md"
             ;;
         *"Назад"*|"")
             return
@@ -473,19 +456,17 @@ main_menu() {
     local choice
     choice=$(gum choose \
         --cursor.foreground "$C_PRIMARY" \
-        --height 12 \
+        --height 10 \
         "📋  Мои записи (список со статусами)" \
         "🎬  Транскрибировать произвольный файл" \
-        "📝  Сделать саммари из .md транскрипта" \
-        "⚡  Полный пайплайн для одного файла" \
+        "📖  Открыть словарь имён/терминов (prompt.txt)" \
         "⚙️   Настройки" \
         "🚪  Выход")
 
     case "$choice" in
         *"Мои записи"*)       action_recordings_list ;;
         *"произвольный"*)     action_transcribe ;;
-        *"саммари"*)          action_summarize ;;
-        *"Полный"*)           action_full ;;
+        *"словарь"*)          ${EDITOR:-open} "$HOME/.config/kt-recorder/prompt.txt" ;;
         *"Настройки"*)        action_settings ;;
         *"Выход"*|"")         exit 0 ;;
     esac

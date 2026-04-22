@@ -55,7 +55,6 @@ else
 Твоя задача — выдать **Markdown-документ** со следующей структурой:
 
 ---
-```
 ---
 title: "<Название встречи — дата>"
 date: YYYY-MM-DD
@@ -112,7 +111,7 @@ tags:
 
 - <сквозные мысли, принципы, правила которые озвучил ключевой человек>
 - <замечания про подачу, процесс, ресурсы>
-```
+
 ---
 
 ВАЖНЫЕ ПРАВИЛА:
@@ -134,7 +133,7 @@ tags:
 10. **Первый блок** — всегда YAML frontmatter в тройных дефисах, потом
     заголовок H1, потом остальное.
 
-Выдавай чистый Markdown, без оборачивания в ```md блоки.
+Выдавай чистый Markdown, без оборачивания в код-блоки.
 PROMPT
 )
 fi
@@ -150,8 +149,9 @@ case "$SUMMARIZER_BACKEND" in
             echo "✗ Ollama не установлена. brew install ollama" >&2
             exit 1
         }
-        # проверяем что модель есть
-        if ! ollama list 2>/dev/null | grep -q "^${SUMMARIZER_MODEL%%:*}"; then
+        # проверяем что модель есть (grep -q + pipefail ломается через SIGPIPE)
+        MODEL_LIST=$(ollama list 2>/dev/null || true)
+        if ! echo "$MODEL_LIST" | grep -q "^${SUMMARIZER_MODEL%%:*}"; then
             echo "→ Модель $SUMMARIZER_MODEL не найдена, тяну..."
             ollama pull "$SUMMARIZER_MODEL"
         fi
