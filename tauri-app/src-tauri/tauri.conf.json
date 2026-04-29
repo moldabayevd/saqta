@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "KT Recorder",
+  "productName": "Saqta",
   "version": "0.3.0",
-  "identifier": "com.moldabayevd.kt-recorder",
+  "identifier": "com.moldabayevd.saqta",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "KT Recorder",
+        "title": "Saqta",
         "width": 900,
         "height": 700,
         "minWidth": 600,

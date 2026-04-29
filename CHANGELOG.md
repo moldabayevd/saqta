@@ -14,7 +14,7 @@
   pyannote.audio v3.1+, поддержка MPS/CUDA/CPU. Auto-detect числа спикеров.
 - **PDF / DOCX / HTML экспорт** — `scripts/export.sh` через pandoc + XeLaTeX
   (кириллица + казахские буквы из коробки). Кастомные шаблоны через
-  `~/.config/kt-recorder/export/`.
+  `~/.config/saqta/export/`.
 - **Custom summary templates** — 5 встроенных (`protocol`, `1on1`,
   `interview`, `lecture`, `kazakh-formal`) + пользовательские. Флаг
   `--template <name>` или `SUMMARIZER_TEMPLATE` в config.
@@ -33,7 +33,7 @@
 
 ### Added
 - **On-demand режим через ярлычок на десктоп** —
-  `launchagents/create-desktop-shortcut.sh` создаёт `KT Recorder.command`
+  `launchagents/create-desktop-shortcut.sh` создаёт `Saqta.command`
   на рабочем столе. Двойной клик → открывается меню, никакого фонового
   процесса который греет Mac. Обработка запускается только когда пользователь
   сам выбрал запись.
@@ -41,11 +41,11 @@
   показывает дата / время / длительность / размер / статус (🔴 raw /
   🟡 transcribed / 🟢 summarized) / имя. Адаптивное меню действий в
   зависимости от статуса выбранной записи.
-- **Интерактивное TUI меню** — `scripts/kt` красивая менюшка на базе
+- **Интерактивное TUI меню** — `scripts/saqta` красивая менюшка на базе
   `gum` (Charmbracelet). Спиннеры, превью файлов (размер, длительность),
   file picker, подтверждения, открытие результата в Finder, просмотр
   через pager. Действия: транскрибация, саммари, полный пайплайн,
-  редактирование конфига. Работает и как CLI (`kt full <file>`).
+  редактирование конфига. Работает и как CLI (`saqta full <file>`).
 - **Саммаризация транскриптов** — `scripts/summarize.sh` превращает сырой
   транскрипт в структурированный протокол (участники, проекты с деталями,
   цитаты, таблицы с цифрами, action items, общие замечания).
@@ -106,7 +106,7 @@
 - Генерация VTT-субтитров с таймкодами
 - Нативные уведомления macOS на каждом этапе
 - Ручная транскрибация через `transcribe-file.sh`
-- Конфигурационный файл `~/.config/kt-recorder/config.sh`
+- Конфигурационный файл `~/.config/saqta/config.sh`
 - Документация: `custom-models.md`, `troubleshooting.md`
 - CI через GitHub Actions: shellcheck для всех скриптов
 
@@ -114,5 +114,5 @@
 - Полная офлайн-работа после первичной загрузки модели
 - Никаких внешних API-вызовов в runtime
 
-[Unreleased]: https://github.com/YOUR_USERNAME/kt-recorder-with-stt/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/YOUR_USERNAME/kt-recorder-with-stt/releases/tag/v0.1.0
+[Unreleased]: https://github.com/YOUR_USERNAME/saqta-with-stt/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/YOUR_USERNAME/saqta-with-stt/releases/tag/v0.1.0

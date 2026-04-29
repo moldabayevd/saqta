@@ -6,13 +6,13 @@
 
 set -uo pipefail
 
-CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
+CONFIG_FILE="$HOME/.config/saqta/config.sh"
 [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 
 : "${WHISPER_MODEL:=$HOME/whisper-models/ggml-large-v3.bin}"
 : "${WHISPER_LANG:=ru}"
 : "${VAD_MODEL:=$HOME/whisper-models/ggml-silero-v5.1.2.bin}"
-: "${PROMPT_FILE:=$HOME/.config/kt-recorder/prompt.txt}"
+: "${PROMPT_FILE:=$HOME/.config/saqta/prompt.txt}"
 : "${NOTIFY_SOUND:=Glass}"
 
 # По умолчанию: 0 — system, 1 — microphone (как пишет QuickRecorder
@@ -122,7 +122,7 @@ date_iso  = datetime.date.today().isoformat()
 date_full = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
 
 with open(out_md, "w", encoding="utf-8") as f:
-    f.write(f"---\ntitle: \"{name}\"\ndate: {date_iso}\nsource: kt-recorder\n")
+    f.write(f"---\ntitle: \"{name}\"\ndate: {date_iso}\nsource: saqta\n")
     f.write(f"language: {lang}\nspeakers: 2\ntags:\n  - meeting\n  - transcript\n")
     f.write(f"  - diarized\n---\n\n")
     f.write(f"# {name}\n\n**Дата:** {date_full}  \n")
@@ -147,7 +147,7 @@ PYEOF
 rm -f "$meeting_dir/_mic.wav" "$meeting_dir/_sys.wav"
 rm -f "$meeting_dir/_mic.vtt" "$meeting_dir/_sys.vtt"
 
-terminal-notifier -title "KT Recorder ✓" \
+terminal-notifier -title "Saqta ✓" \
     -message "Готов диалог: $name" \
     -sound "$NOTIFY_SOUND" \
     -execute "open '$meeting_dir'" 2>/dev/null || true

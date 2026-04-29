@@ -19,7 +19,7 @@ if [ $# -eq 0 ]; then
     cat << EOF
 Usage: $(basename "$0") <meeting.md> [output.md] [--template <name>]
 
-Конфиг в ~/.config/kt-recorder/config.sh:
+Конфиг в ~/.config/saqta/config.sh:
   SUMMARIZER_BACKEND  — ollama | claude (по умолчанию: ollama)
   SUMMARIZER_MODEL    — для ollama: qwen3:32b / qwen3:14b / gemma3:27b / ...
                         для claude: claude-sonnet-4-5 / claude-opus-4-7
@@ -28,7 +28,7 @@ Usage: $(basename "$0") <meeting.md> [output.md] [--template <name>]
                         (по умолчанию: protocol)
 
 Шаблоны лежат в \$REPO/templates/<name>.txt или
-~/.config/kt-recorder/templates/<name>.txt (приоритет — пользовательский).
+~/.config/saqta/templates/<name>.txt (приоритет — пользовательский).
 EOF
     exit 1
 fi
@@ -63,13 +63,13 @@ done
 
 [ -f "$INPUT" ] || { echo "✗ Файл не найден: $INPUT" >&2; exit 1; }
 
-CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
+CONFIG_FILE="$HOME/.config/saqta/config.sh"
 # shellcheck disable=SC1090
 [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 
 : "${SUMMARIZER_BACKEND:=ollama}"
 : "${SUMMARIZER_MODEL:=qwen3:32b}"
-: "${SUMMARIZER_PROMPT_FILE:=$HOME/.config/kt-recorder/summarize_prompt.txt}"
+: "${SUMMARIZER_PROMPT_FILE:=$HOME/.config/saqta/summarize_prompt.txt}"
 : "${SUMMARIZER_TEMPLATE:=protocol}"
 
 # Override из CLI
@@ -78,7 +78,7 @@ CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
 # Поиск шаблона: сначала пользовательская папка, потом репо
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_TEMPLATES="$SCRIPT_DIR/../templates"
-USER_TEMPLATES="$HOME/.config/kt-recorder/templates"
+USER_TEMPLATES="$HOME/.config/saqta/templates"
 
 TEMPLATE_FILE=""
 if [ -f "$USER_TEMPLATES/$SUMMARIZER_TEMPLATE.txt" ]; then
@@ -109,7 +109,7 @@ else
 ---
 title: "<Название встречи — дата>"
 date: YYYY-MM-DD
-source: kt-recorder
+source: saqta
 tags:
   - meeting
   - protocol
@@ -292,8 +292,8 @@ case "$SUMMARIZER_BACKEND" in
 
         curl -s https://openrouter.ai/api/v1/chat/completions \
             -H "Authorization: Bearer $OPENROUTER_API_KEY" \
-            -H "HTTP-Referer: https://github.com/moldabayevd/kt-recorder" \
-            -H "X-Title: KT Recorder" \
+            -H "HTTP-Referer: https://github.com/moldabayevd/saqta" \
+            -H "X-Title: Saqta" \
             -H "content-type: application/json" \
             -d @"$tmp" | jq -r '.choices[0].message.content' > "$OUTPUT"
         rm -f "$tmp"

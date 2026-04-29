@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-PLIST_LABEL="com.ktrecorder.autotranscribe"
+PLIST_LABEL="com.saqta.autotranscribe"
 PLIST_FILE="$HOME/Library/LaunchAgents/$PLIST_LABEL.plist"
 
 if [ ! -f "$PLIST_FILE" ]; then

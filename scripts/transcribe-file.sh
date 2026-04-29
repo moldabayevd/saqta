@@ -23,7 +23,7 @@ if [ $# -eq 0 ]; then
     usage
 fi
 
-CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
+CONFIG_FILE="$HOME/.config/saqta/config.sh"
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "✗ Config not found: $CONFIG_FILE" >&2
     exit 1
@@ -35,7 +35,7 @@ source "$CONFIG_FILE"
 : "${WHISPER_LANG:=ru}"
 : "${OUTPUT_FORMATS:=txt,vtt}"
 : "${VAD_MODEL:=$HOME/whisper-models/ggml-silero-v5.1.2.bin}"
-: "${PROMPT_FILE:=$HOME/.config/kt-recorder/prompt.txt}"
+: "${PROMPT_FILE:=$HOME/.config/saqta/prompt.txt}"
 
 INPUT="$1"
 LANG="${2:-$WHISPER_LANG}"
@@ -104,7 +104,7 @@ date_iso=$(date '+%Y-%m-%d')
     echo "---"
     echo "title: \"$name\""
     echo "date: $date_iso"
-    echo "source: kt-recorder"
+    echo "source: saqta"
     echo "language: $LANG"
     echo "tags:"
     echo "  - meeting"

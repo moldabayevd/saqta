@@ -32,7 +32,7 @@
 <main>
   <header>
     <div class="title-row">
-      <h1>🎙️ KT Recorder</h1>
+      <h1>🎙️ Saqta</h1>
       <button class="reload" on:click={reload} disabled={loading}>
         {loading ? "↻" : "⟳"} Обновить
       </button>

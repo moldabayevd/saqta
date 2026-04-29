@@ -1,4 +1,4 @@
-# Contributing to KT Recorder
+# Contributing to Saqta
 
 Спасибо, что хочешь помочь! Тут всё про то, как контрибьютить в проект.
 
@@ -51,7 +51,7 @@
 - **Диаризация** — разметка «кто говорит» из раздельных треков QuickRecorder
 - **Swift menu bar app** — замена LaunchAgent'а на явное приложение с меню
 - **Ollama-интеграция** — опциональный шаг саммаризации после транскрипта
-- **Homebrew tap** — чтобы `brew install kt-recorder`
+- **Homebrew tap** — чтобы `brew install saqta`
 - **Диаризация через pyannote** — для обычных записей без раздельных треков
 
 ## Как протестировать изменения
@@ -63,10 +63,10 @@
 # 2. Записать тестовую 30-секундную встречу через QuickRecorder
 
 # 3. Или транскрибировать готовый файл:
-~/bin/kt-recorder/transcribe-file.sh path/to/test.m4a
+~/bin/saqta/transcribe-file.sh path/to/test.m4a
 
 # 4. Смотреть логи watcher:
-tail -f /tmp/kt-recorder.log /tmp/kt-recorder.err
+tail -f /tmp/saqta.log /tmp/saqta.err
 ```
 
 ## Code of Conduct

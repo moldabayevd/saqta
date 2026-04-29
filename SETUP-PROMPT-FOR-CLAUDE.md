@@ -1,7 +1,7 @@
 # 🤖 Setup Brief для Claude Code на Mac
 
 > Это инструкция для Claude Code, запущенного на свежем Mac mini / MacBook
-> пользователя **moldabayevd**. Цель: полностью установить kt-recorder с
+> пользователя **moldabayevd**. Цель: полностью установить saqta с
 > поддержкой казахского языка и красивым меню за одну сессию без участия
 > пользователя (user выходит покурить, возвращается — всё работает).
 
@@ -15,7 +15,7 @@
 **Цель проекта:** приватная локальная транскрибация рабочих встреч на
 казахском + русском + смеси (code-switching). С саммаризацией. Без облаков.
 
-**Репо:** https://github.com/moldabayevd/kt-recorder (уже публичный, не надо
+**Репо:** https://github.com/moldabayevd/saqta (уже публичный, не надо
 создавать).
 
 ---
@@ -62,8 +62,8 @@ gum --version
 ```bash
 mkdir -p ~/Projects
 cd ~/Projects
-git clone https://github.com/moldabayevd/kt-recorder.git
-cd kt-recorder
+git clone https://github.com/moldabayevd/saqta.git
+cd saqta
 git config user.name "moldabayevd"
 git config user.email "moldabayevd@users.noreply.github.com"
 ```
@@ -89,10 +89,10 @@ mv ggml-silero-v5.1.2.bin ~/whisper-models/ 2>/dev/null || true
 # mv ggml-model.bin ~/whisper-models/ggml-large-v3-russian.bin
 ```
 
-### 5. Основная установка kt-recorder
+### 5. Основная установка saqta
 
 ```bash
-cd ~/Projects/kt-recorder
+cd ~/Projects/saqta
 ./install.sh
 ```
 
@@ -105,16 +105,16 @@ cd ~/Projects/kt-recorder
 ### 6. Qwen3-ASR для казахского / kk+ru code-switching
 
 ```bash
-cd ~/Projects/kt-recorder
+cd ~/Projects/saqta
 bash scripts/setup-qwen3.sh
 ```
 
-Это создаст venv в `~/.config/kt-recorder/.qwen3-venv`, поставит `transformers`,
+Это создаст venv в `~/.config/saqta/.qwen3-venv`, поставит `transformers`,
 `torch`, `soundfile`. **Pip займёт ~5-10 мин**, будь терпелив.
 
 **Проверка:**
 ```bash
-source ~/.config/kt-recorder/.qwen3-venv/bin/activate
+source ~/.config/saqta/.qwen3-venv/bin/activate
 python -c "import torch; print('MPS:', torch.backends.mps.is_available())"
 deactivate
 ```
@@ -146,13 +146,13 @@ ollama list
 echo "Ответь одним словом на казахском: привет" | ollama run qwen3:14b --nowordwrap
 ```
 
-### 8. Конфиг kt-recorder
+### 8. Конфиг saqta
 
-Создай/обнови `~/.config/kt-recorder/config.sh`:
+Создай/обнови `~/.config/saqta/config.sh`:
 
 ```bash
-cat > ~/.config/kt-recorder/config.sh << 'EOF'
-# KT Recorder configuration
+cat > ~/.config/saqta/config.sh << 'EOF'
+# Saqta configuration
 
 # Папка записей QuickRecorder
 RECORDINGS_DIR="$HOME/Recordings"
@@ -166,7 +166,7 @@ VAD_MODEL="$HOME/whisper-models/ggml-silero-v5.1.2.bin"
 
 # Казахский бэкенд
 KK_BACKEND="qwen3"
-QWEN3_ASR_SCRIPT="$HOME/.config/kt-recorder/qwen3_asr.py"
+QWEN3_ASR_SCRIPT="$HOME/.config/saqta/qwen3_asr.py"
 WHISPER_KK_MODEL="$HOME/whisper-models/ggml-base-kk.bin"
 
 # Саммаризатор
@@ -177,31 +177,31 @@ SUMMARIZER_MODEL="qwen3:32b"
 OUTPUT_FORMATS="txt,vtt"
 OPEN_FINDER_ON_DONE=true
 NOTIFY_SOUND="Glass"
-PROMPT_FILE="$HOME/.config/kt-recorder/prompt.txt"
+PROMPT_FILE="$HOME/.config/saqta/prompt.txt"
 EOF
 ```
 
 Создай пустой словарь промпта (пользователь потом заполнит):
 ```bash
-touch ~/.config/kt-recorder/prompt.txt
+touch ~/.config/saqta/prompt.txt
 ```
 
 ### 9. Ярлычок на рабочий стол
 
 ```bash
-cd ~/Projects/kt-recorder
+cd ~/Projects/saqta
 bash launchagents/create-desktop-shortcut.sh
 ```
 
-После этого на рабочем столе появится **`KT Recorder.command`** — двойной
+После этого на рабочем столе появится **`Saqta.command`** — двойной
 клик запускает TUI меню.
 
 ### 10. Первая проверка
 
 ```bash
 mkdir -p ~/Recordings
-cd ~/Projects/kt-recorder
-./scripts/kt
+cd ~/Projects/saqta
+./scripts/saqta
 ```
 
 Должно открыться красивое меню с пунктами:
@@ -220,7 +220,7 @@ cd ~/Projects/kt-recorder
 `~/Downloads/` — прогони **короткий** файл (< 5 минут) через полный пайплайн:
 
 ```bash
-./scripts/kt full ~/Recordings/test.mp4
+./scripts/saqta full ~/Recordings/test.mp4
 ```
 
 Если нет — пропусти, юзер сам протестит.
@@ -233,16 +233,16 @@ cd ~/Projects/kt-recorder
 ✅ Homebrew              — установлен / уже был
 ✅ Зависимости           — ffmpeg, whisper-cpp, gum, ollama, ...
 ✅ Whisper модели        — large-v3-turbo (XX GB), silero-vad
-✅ kt-recorder клонирован — ~/Projects/kt-recorder
+✅ saqta клонирован — ~/Projects/saqta
 ✅ Qwen3-ASR venv        — готов, MPS: True
 ✅ Ollama модели         — qwen3:32b (20GB), qwen3:14b (9GB)
-✅ Конфиг                — ~/.config/kt-recorder/config.sh
-✅ Ярлычок на десктопе   — KT Recorder.command
+✅ Конфиг                — ~/.config/saqta/config.sh
+✅ Ярлычок на десктопе   — Saqta.command
 ⚠️ Смоук-тест            — пропущен, нет тестовой записи (или "прошёл за 2мин")
 
 Что делать дальше:
   1. ⌘⇧R → запиши тестовую встречу (любую, 1-2 мин)
-  2. Двойной клик по 'KT Recorder' на рабочем столе
+  2. Двойной клик по 'Saqta' на рабочем столе
   3. Выбери запись → ⚡ Полный пайплайн
   4. Дождись спиннеров → откроется Finder с результатом
 ```
@@ -265,7 +265,7 @@ brew install charmbracelet/tap/gum   # если обычный brew install не
 
 ### Qwen3 `torch` падает при установке (Apple Silicon specific)
 ```bash
-source ~/.config/kt-recorder/.qwen3-venv/bin/activate
+source ~/.config/saqta/.qwen3-venv/bin/activate
 pip install --pre torch torchaudio --index-url https://download.pytorch.org/whl/nightly/cpu
 deactivate
 ```
@@ -281,7 +281,7 @@ ollama list
 ### Qwen3:32b не помещается в память (OOM)
 Переключи в конфиге на 14B:
 ```bash
-sed -i '' 's/qwen3:32b/qwen3:14b/' ~/.config/kt-recorder/config.sh
+sed -i '' 's/qwen3:32b/qwen3:14b/' ~/.config/saqta/config.sh
 ```
 
 ### Ярлычок на десктопе требует "Open" через правый клик
@@ -319,10 +319,10 @@ sed -i '' 's/qwen3:32b/qwen3:14b/' ~/.config/kt-recorder/config.sh
 
 ## Финальный чеклист перед тем как сдать задачу
 
-- [ ] `./scripts/kt` открывает меню без ошибок
+- [ ] `./scripts/saqta` открывает меню без ошибок
 - [ ] `ollama list` показывает qwen3:32b и qwen3:14b
-- [ ] `~/.config/kt-recorder/config.sh` существует и корректен
-- [ ] `KT Recorder.command` на рабочем столе и кликается
+- [ ] `~/.config/saqta/config.sh` существует и корректен
+- [ ] `Saqta.command` на рабочем столе и кликается
 - [ ] Qwen3-ASR venv создан, MPS доступен
 - [ ] Все модели whisper на месте в `~/whisper-models/`
 - [ ] В отчёте указал сколько диска занято (`du -sh ~/whisper-models ~/.ollama`)

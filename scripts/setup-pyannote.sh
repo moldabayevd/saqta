@@ -12,8 +12,8 @@
 
 set -euo pipefail
 
-VENV_DIR="$HOME/.config/kt-recorder/.pyannote-venv"
-SCRIPT_OUT="$HOME/.config/kt-recorder/diarize.py"
+VENV_DIR="$HOME/.config/saqta/.pyannote-venv"
+SCRIPT_OUT="$HOME/.config/saqta/diarize.py"
 
 echo "→ Создаю venv: $VENV_DIR"
 python3 -m venv "$VENV_DIR"
@@ -97,5 +97,5 @@ echo "  1. Получи бесплатный HF токен: https://huggingface.
 echo "  2. Прими условия gated модели:"
 echo "     https://huggingface.co/pyannote/speaker-diarization-3.1"
 echo "     https://huggingface.co/pyannote/segmentation-3.0"
-echo "  3. Пропиши в ~/.config/kt-recorder/config.sh:"
+echo "  3. Пропиши в ~/.config/saqta/config.sh:"
 echo "     HF_TOKEN=\"hf_...\""

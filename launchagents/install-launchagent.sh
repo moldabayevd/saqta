@@ -3,9 +3,9 @@
 
 set -euo pipefail
 
-PLIST_LABEL="com.ktrecorder.autotranscribe"
+PLIST_LABEL="com.saqta.autotranscribe"
 PLIST_FILE="$HOME/Library/LaunchAgents/$PLIST_LABEL.plist"
-SCRIPT_PATH="$HOME/bin/kt-recorder/auto-transcribe.sh"
+SCRIPT_PATH="$HOME/bin/saqta/auto-transcribe.sh"
 
 if [ ! -f "$SCRIPT_PATH" ]; then
     echo "✗ Скрипт не найден: $SCRIPT_PATH" >&2
@@ -49,10 +49,10 @@ cat > "$PLIST_FILE" << EOF
     </dict>
 
     <key>StandardOutPath</key>
-    <string>/tmp/kt-recorder.log</string>
+    <string>/tmp/saqta.log</string>
 
     <key>StandardErrorPath</key>
-    <string>/tmp/kt-recorder.err</string>
+    <string>/tmp/saqta.err</string>
 
     <key>EnvironmentVariables</key>
     <dict>
@@ -68,8 +68,8 @@ launchctl load "$PLIST_FILE"
 echo "✓ LaunchAgent установлен"
 echo ""
 echo "  Файл:          $PLIST_FILE"
-echo "  Логи:          /tmp/kt-recorder.log"
-echo "  Ошибки:        /tmp/kt-recorder.err"
+echo "  Логи:          /tmp/saqta.log"
+echo "  Ошибки:        /tmp/saqta.err"
 echo ""
 echo "  Остановить:    launchctl unload $PLIST_FILE"
 echo "  Перезапуск:    launchctl kickstart -k gui/\$(id -u)/$PLIST_LABEL"

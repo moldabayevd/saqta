@@ -9,7 +9,7 @@
 ---
 title: "<Название встречи — дата>"
 date: YYYY-MM-DD
-source: kt-recorder
+source: saqta
 template: protocol
 tags:
   - meeting

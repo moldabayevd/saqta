@@ -8,14 +8,14 @@
 
 ## 🇷🇺 Версия
 
-🥷 Зарелизил v0.3 KT Recorder. Сделал за выходные то, за что Meetily просит подписку:
+🥷 Зарелизил v0.3 Saqta. Сделал за выходные то, за что Meetily просит подписку:
 
 ✅ Speaker diarization без 2 дорожек (pyannote.audio v3)
 ✅ PDF / DOCX экспорт (pandoc + кастомные шаблоны)
 ✅ Custom summary templates (protocol / 1on1 / interview / lecture)
 ✅ Гибкие LLM-провайдеры (Groq / OpenRouter / vLLM / LM Studio / Ollama / Claude)
 
-|  | Meetily Free | Meetily PRO 💰 | KT Recorder v0.3 |
+|  | Meetily Free | Meetily PRO 💰 | Saqta v0.3 |
 |---|---|---|---|
 | Native UI | ✅ | ✅ | 🔜 v0.2 |
 | Auto-detect | ❌ | ✅ | 🔜 v0.2 |
@@ -41,7 +41,7 @@
 ✓ 2-track diarization бесплатно
 ✓ Хакабельность — bash скрипты vs Rust+Next.js
 
-GitHub: https://github.com/moldabayevd/kt-recorder
+GitHub: https://github.com/moldabayevd/saqta
 
 Если ваша компания собирается купить Meetily PRO для 50 человек ($Х × 50 = большой счёт) — попробуйте сначала бесплатный аналог. PR welcome.
 
@@ -51,7 +51,7 @@ GitHub: https://github.com/moldabayevd/kt-recorder
 
 ## 🇬🇧 EN
 
-🥷 Released v0.3 of KT Recorder. Built over the weekend everything Meetily charges a subscription for:
+🥷 Released v0.3 of Saqta. Built over the weekend everything Meetily charges a subscription for:
 
 ✅ Speaker diarization without 2 tracks (pyannote.audio v3)
 ✅ PDF / DOCX export (pandoc + custom templates)
@@ -74,7 +74,7 @@ Where **we** beat them permanently:
 ✓ 2-track diarization free
 ✓ Hackable — bash scripts vs Rust+Next.js
 
-GitHub: https://github.com/moldabayevd/kt-recorder
+GitHub: https://github.com/moldabayevd/saqta
 
 If your company is about to buy Meetily PRO for 50 people — try the free alternative first.
 

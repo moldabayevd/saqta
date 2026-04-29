@@ -15,7 +15,7 @@ fi
 INPUT="$1"
 [ -f "$INPUT" ] || { echo "✗ Файл не найден: $INPUT" >&2; exit 1; }
 
-CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
+CONFIG_FILE="$HOME/.config/saqta/config.sh"
 # shellcheck disable=SC1090
 [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 

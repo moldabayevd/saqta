@@ -1,13 +1,13 @@
 [package]
-name = "kt-recorder-app"
+name = "saqta-app"
 version = "0.3.0"
-description = "KT Recorder — privacy-first meeting transcriber for macOS"
+description = "Saqta — privacy-first meeting transcriber for macOS"
 authors = ["moldabayevd"]
 license = "MIT"
 edition = "2021"
 
 [lib]
-name = "kt_recorder_app_lib"
+name = "saqta_app_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

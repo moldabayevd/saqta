@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# create-desktop-shortcut.sh — создаёт двойной-клик ярлычок KT Recorder.app
+# create-desktop-shortcut.sh — создаёт двойной-клик ярлычок Saqta.app
 # на рабочем столе. При двойном клике открывается Terminal с запущенным меню.
 #
 # Использование:
@@ -8,27 +8,27 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-KT_SCRIPT="$SCRIPT_DIR/scripts/kt"
+SAQTA_SCRIPT="$SCRIPT_DIR/scripts/saqta"
 
-if [ ! -x "$KT_SCRIPT" ]; then
-    echo "✗ Не найден или не исполняемый: $KT_SCRIPT" >&2
+if [ ! -x "$SAQTA_SCRIPT" ]; then
+    echo "✗ Не найден или не исполняемый: $SAQTA_SCRIPT" >&2
     exit 1
 fi
 
 DESKTOP="$HOME/Desktop"
-APP_NAME="KT Recorder"
+APP_NAME="Saqta"
 COMMAND_FILE="$DESKTOP/$APP_NAME.command"
 
 cat > "$COMMAND_FILE" << EOF
 #!/usr/bin/env bash
-# Двойной клик → открывается Terminal с меню KT Recorder.
+# Двойной клик → открывается Terminal с меню Saqta.
 # Закрыть можно Cmd+W или выбрав "Выход" в меню.
-exec "$KT_SCRIPT"
+exec "$SAQTA_SCRIPT"
 EOF
 
 chmod +x "$COMMAND_FILE"
 
-# Убираем .command расширение из отображения — в Finder будет просто "KT Recorder"
+# Убираем .command расширение из отображения — в Finder будет просто "Saqta"
 # (стандартный трюк — через extended attribute).
 xattr -d com.apple.quarantine "$COMMAND_FILE" 2>/dev/null || true
 

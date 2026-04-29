@@ -6,7 +6,7 @@ set -euo pipefail
 
 # --- Load config ------------------------------------------------------------
 
-CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
+CONFIG_FILE="$HOME/.config/saqta/config.sh"
 if [ ! -f "$CONFIG_FILE" ]; then
     echo "✗ Config not found: $CONFIG_FILE" >&2
     echo "  Запусти ./install.sh из репы" >&2
@@ -23,7 +23,7 @@ source "$CONFIG_FILE"
 : "${OPEN_FINDER_ON_DONE:=true}"
 : "${NOTIFY_SOUND:=Glass}"
 : "${VAD_MODEL:=$HOME/whisper-models/ggml-silero-v5.1.2.bin}"
-: "${PROMPT_FILE:=$HOME/.config/kt-recorder/prompt.txt}"
+: "${PROMPT_FILE:=$HOME/.config/saqta/prompt.txt}"
 
 # --- Dependencies check -----------------------------------------------------
 
@@ -75,7 +75,7 @@ process_file() {
     dir=$(dirname "$file")
 
     echo "[$(date '+%H:%M:%S')] Processing: $basename"
-    notify "KT Recorder" "Начинаю транскрибацию: $basename"
+    notify "Saqta" "Начинаю транскрибацию: $basename"
 
     # Create subfolder for this meeting
     local meeting_dir="$dir/$name"
@@ -102,7 +102,7 @@ process_file() {
                "$audio_wav" 2>&1 | tail -3 || ffmpeg_status=$?
     fi
     if [ "$ffmpeg_status" -ne 0 ] || [ ! -s "$audio_wav" ]; then
-        notify "KT Recorder ✗" "Не удалось извлечь аудио: $basename" "Basso"
+        notify "Saqta ✗" "Не удалось извлечь аудио: $basename" "Basso"
         return 1
     fi
 
@@ -136,7 +136,7 @@ process_file() {
                 "${format_flags[@]}" \
                 -of "$meeting_dir/_transcript" 2>&1 || whisper_status=$?
     if [ "$whisper_status" -ne 0 ]; then
-        notify "KT Recorder ✗" "Ошибка whisper: $basename" "Basso"
+        notify "Saqta ✗" "Ошибка whisper: $basename" "Basso"
         rm -f "$audio_wav"
         return 1
     fi
@@ -155,7 +155,7 @@ process_file() {
         echo "---"
         echo "title: \"$name\""
         echo "date: $date_iso"
-        echo "source: kt-recorder"
+        echo "source: saqta"
         echo "language: $WHISPER_LANG"
         echo "tags:"
         echo "  - meeting"
@@ -185,13 +185,13 @@ process_file() {
     rm -f "$meeting_dir/_transcript.txt"
 
     echo "[$(date '+%H:%M:%S')] ✓ Done: $meeting_dir"
-    notify_done "KT Recorder ✓" "Готово: $name" "$meeting_dir"
+    notify_done "Saqta ✓" "Готово: $name" "$meeting_dir"
 }
 
 # --- Main loop --------------------------------------------------------------
 
 echo "╔════════════════════════════════════════╗"
-echo "║  KT Recorder — watcher запущен         ║"
+echo "║  Saqta — watcher запущен         ║"
 echo "╚════════════════════════════════════════╝"
 echo ""
 echo "Слежу за:  $RECORDINGS_DIR"
@@ -200,7 +200,7 @@ echo "Язык:      $WHISPER_LANG"
 echo "Форматы:   $OUTPUT_FORMATS"
 echo ""
 
-notify "KT Recorder" "Watcher запущен — слежу за $RECORDINGS_DIR"
+notify "Saqta" "Watcher запущен — слежу за $RECORDINGS_DIR"
 
 # fswatch with null separator for filenames with spaces
 fswatch -0 --event Created --event Renamed "$RECORDINGS_DIR" | \

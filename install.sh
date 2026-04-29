@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# KT Recorder with STT - installer
-# https://github.com/YOUR_USERNAME/kt-recorder-with-stt
+# Saqta with STT - installer
+# https://github.com/YOUR_USERNAME/saqta-with-stt
 
 set -euo pipefail
 
@@ -20,7 +20,7 @@ echo -e "${BLUE}${BOLD}"
 cat << "EOF"
 ╔═══════════════════════════════════════════╗
 ║                                           ║
-║     KT Recorder with STT — installer      ║
+║     Saqta with STT — installer      ║
 ║     Privacy-first meeting transcriber     ║
 ║                                           ║
 ╚═══════════════════════════════════════════╝
@@ -142,7 +142,7 @@ fi
 
 # --- Install scripts --------------------------------------------------------
 
-INSTALL_DIR="$HOME/bin/kt-recorder"
+INSTALL_DIR="$HOME/bin/saqta"
 mkdir -p "$INSTALL_DIR"
 
 echo ""
@@ -154,7 +154,7 @@ ok "Скрипты установлены"
 
 # --- Config -----------------------------------------------------------------
 
-CONFIG_DIR="$HOME/.config/kt-recorder"
+CONFIG_DIR="$HOME/.config/saqta"
 CONFIG_FILE="$CONFIG_DIR/config.sh"
 
 mkdir -p "$CONFIG_DIR"
@@ -167,7 +167,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
         DEFAULT_MODEL="$MODEL_FILE"
     fi
     cat > "$CONFIG_FILE" << EOF
-# KT Recorder configuration
+# Saqta configuration
 
 # Папка, за которой следит watcher
 RECORDINGS_DIR="\$HOME/Recordings"
@@ -190,7 +190,7 @@ WHISPER_LANG="ru"
 #   whisper-kk — whisper-base.kk (только чистый казахский)
 #   whisper    — fallback на основной WHISPER_MODEL с -l kk
 KK_BACKEND="qwen3"
-QWEN3_ASR_SCRIPT="\$HOME/.config/kt-recorder/qwen3_asr.py"
+QWEN3_ASR_SCRIPT="\$HOME/.config/saqta/qwen3_asr.py"
 WHISPER_KK_MODEL="\$HOME/whisper-models/ggml-base-kk.bin"
 
 # === Саммаризация (scripts/summarize.sh) ====================================
@@ -207,7 +207,7 @@ SUMMARIZER_MODEL="qwen3:32b"
 
 # Путь к кастомному промпту для саммаризатора (опционально).
 # По умолчанию используется встроенный промпт в scripts/summarize.sh.
-SUMMARIZER_PROMPT_FILE="\$HOME/.config/kt-recorder/summarize_prompt.txt"
+SUMMARIZER_PROMPT_FILE="\$HOME/.config/saqta/summarize_prompt.txt"
 
 # Форматы экспорта через запятую: txt, vtt, srt, json
 OUTPUT_FORMATS="txt,vtt"
@@ -222,7 +222,7 @@ NOTIFY_SOUND="Glass"
 VAD_MODEL="$VAD_MODEL_FILE"
 
 # Initial prompt — словарь имён и терминов, чтобы Whisper не коверкал их
-PROMPT_FILE="\$HOME/.config/kt-recorder/prompt.txt"
+PROMPT_FILE="\$HOME/.config/saqta/prompt.txt"
 EOF
     ok "Создан конфиг: $CONFIG_FILE"
 else
@@ -274,6 +274,6 @@ echo "     • Microphone → QuickRecorder"
 echo ""
 echo "  3. Нажми ⌘⇧R — и погнали!"
 echo ""
-echo -e "${BLUE}Документация:${NC} https://github.com/YOUR_USERNAME/kt-recorder-with-stt"
-echo -e "${BLUE}Issues:${NC}        https://github.com/YOUR_USERNAME/kt-recorder-with-stt/issues"
+echo -e "${BLUE}Документация:${NC} https://github.com/YOUR_USERNAME/saqta-with-stt"
+echo -e "${BLUE}Issues:${NC}        https://github.com/YOUR_USERNAME/saqta-with-stt/issues"
 echo ""

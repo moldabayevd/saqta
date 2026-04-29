@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎙️ KT Recorder with STT
+# 🎙️ Saqta with STT
 
 **Приватный локальный рекордер встреч с автоматической транскрибацией для macOS**
 
@@ -71,16 +71,16 @@
 ### В одну команду
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/kt-recorder-with-stt.git
-cd kt-recorder-with-stt
+git clone https://github.com/YOUR_USERNAME/saqta-with-stt.git
+cd saqta-with-stt
 ./install.sh
 ```
 
 Установщик сам:
 - ✅ поставит зависимости (`whisper-cpp`, `ffmpeg`, `fswatch`, `terminal-notifier`, `quickrecorder`)
 - ✅ скачает модель Whisper Large-v3 (~3 ГБ)
-- ✅ разложит скрипты в `~/bin/kt-recorder/`
-- ✅ создаст конфиг в `~/.config/kt-recorder/config.sh`
+- ✅ разложит скрипты в `~/bin/saqta/`
+- ✅ создаст конфиг в `~/.config/saqta/config.sh`
 - ✅ предложит включить автозапуск через LaunchAgent
 
 ### После установки
@@ -134,7 +134,7 @@ meeting_2026-04-22_14-30/
 
 ## ⚙️ Конфигурация
 
-Все настройки живут в `~/.config/kt-recorder/config.sh`:
+Все настройки живут в `~/.config/saqta/config.sh`:
 
 ```bash
 # Где сохраняются записи
@@ -159,7 +159,7 @@ NOTIFY_SOUND="Glass"
 После правки — перезапусти watcher:
 
 ```bash
-launchctl kickstart -k gui/$(id -u)/com.ktrecorder.autotranscribe
+launchctl kickstart -k gui/$(id -u)/com.saqta.autotranscribe
 ```
 
 ---
@@ -169,7 +169,7 @@ launchctl kickstart -k gui/$(id -u)/com.ktrecorder.autotranscribe
 ### Транскрибировать старую запись
 
 ```bash
-~/bin/kt-recorder/transcribe-file.sh ~/Downloads/old-meeting.mp4
+~/bin/saqta/transcribe-file.sh ~/Downloads/old-meeting.mp4
 ```
 
 ### Улучшить качество русского
@@ -179,12 +179,12 @@ launchctl kickstart -k gui/$(id -u)/com.ktrecorder.autotranscribe
 ### Отключить автозапуск
 
 ```bash
-~/bin/kt-recorder/launchagents/uninstall-launchagent.sh
+~/bin/saqta/launchagents/uninstall-launchagent.sh
 ```
 
 Теперь watcher запускается только руками:
 ```bash
-~/bin/kt-recorder/auto-transcribe.sh
+~/bin/saqta/auto-transcribe.sh
 ```
 
 ---

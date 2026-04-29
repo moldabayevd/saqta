@@ -6,7 +6,7 @@
 
 set -uo pipefail
 
-CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
+CONFIG_FILE="$HOME/.config/saqta/config.sh"
 [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 
 : "${WHISPER_MODEL:=$HOME/whisper-models/ggml-large-v3.bin}"
@@ -14,7 +14,7 @@ CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
 : "${OUTPUT_FORMATS:=txt,vtt}"
 : "${NOTIFY_SOUND:=Glass}"
 : "${VAD_MODEL:=$HOME/whisper-models/ggml-silero-v5.1.2.bin}"
-: "${PROMPT_FILE:=$HOME/.config/kt-recorder/prompt.txt}"
+: "${PROMPT_FILE:=$HOME/.config/saqta/prompt.txt}"
 
 if [ $# -eq 0 ]; then
     echo "Usage: $(basename "$0") <audio-or-video-file> [language]"
@@ -117,7 +117,7 @@ notify_quarter() {
     if [ "$quarter" -gt 0 ] && [[ "$NOTIFIED_QUARTERS" != *"|$quarter|"* ]]; then
         NOTIFIED_QUARTERS+="|$quarter|"
         local milestone=$(( quarter * 25 ))
-        terminal-notifier -title "KT Recorder" \
+        terminal-notifier -title "Saqta" \
             -message "Транскрипция: ${milestone}%" \
             -sound default 2>/dev/null || true
     fi
@@ -173,7 +173,7 @@ date_iso=$(date '+%Y-%m-%d')
     echo "---"
     echo "title: \"$name\""
     echo "date: $date_iso"
-    echo "source: kt-recorder"
+    echo "source: saqta"
     echo "language: $LANG"
     echo "tags:"
     echo "  - meeting"
@@ -192,7 +192,7 @@ date_iso=$(date '+%Y-%m-%d')
 
 rm -f "$meeting_dir/_transcript.txt" "$audio_wav"
 
-terminal-notifier -title "KT Recorder ✓" \
+terminal-notifier -title "Saqta ✓" \
     -message "Готово: $name" \
     -sound "$NOTIFY_SOUND" \
     -execute "open '$meeting_dir'" 2>/dev/null || true

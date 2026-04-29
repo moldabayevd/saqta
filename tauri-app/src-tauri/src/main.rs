@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-    kt_recorder_app_lib::run()
+    saqta_app_lib::run()
 }

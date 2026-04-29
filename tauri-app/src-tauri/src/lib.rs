@@ -44,16 +44,16 @@ fn home() -> PathBuf {
     PathBuf::from(std::env::var("HOME").unwrap_or_else(|_| "/".to_string()))
 }
 
-/// Путь до bash-скриптов в репозитории kt-recorder.
+/// Путь до bash-скриптов в репозитории saqta.
 /// Ищем относительно бинарника, потом по дефолтным путям, потом env.
 fn scripts_dir() -> PathBuf {
-    if let Ok(env_path) = std::env::var("KT_SCRIPTS_DIR") {
+    if let Ok(env_path) = std::env::var("SAQTA_SCRIPTS_DIR") {
         return PathBuf::from(env_path);
     }
 
     let candidates = vec![
-        home().join("Projects/kt-recorder/scripts"),
-        home().join("kt-recorder/scripts"),
+        home().join("Projects/saqta/scripts"),
+        home().join("saqta/scripts"),
         // dev-режим: tauri-app внутри репо
         PathBuf::from("../scripts"),
     ];
@@ -66,7 +66,7 @@ fn scripts_dir() -> PathBuf {
     PathBuf::from("scripts")
 }
 
-/// Минимальный парсер ~/.config/kt-recorder/config.sh — только KEY="value"
+/// Минимальный парсер ~/.config/saqta/config.sh — только KEY="value"
 /// или KEY=value, без вложенных подстановок.
 fn parse_config() -> Config {
     let mut cfg = Config {
@@ -79,7 +79,7 @@ fn parse_config() -> Config {
         summarizer_template: "protocol".to_string(),
     };
 
-    let path = home().join(".config/kt-recorder/config.sh");
+    let path = home().join(".config/saqta/config.sh");
     let Ok(content) = fs::read_to_string(&path) else {
         return cfg;
     };

@@ -64,7 +64,7 @@ Polling (проверка каждые N секунд через `while sleep`) 
 7. Генерирует Markdown с YAML frontmatter
 8. Отправляет уведомление через terminal-notifier
 
-Живёт в фоне через **LaunchAgent** (`com.ktrecorder.autotranscribe`) с `KeepAlive` — если упал, перезапустится.
+Живёт в фоне через **LaunchAgent** (`com.saqta.autotranscribe`) с `KeepAlive` — если упал, перезапустится.
 
 ### 4. ffmpeg
 
@@ -82,7 +82,7 @@ ffmpeg -i input.mp4 -ar 16000 -ac 1 -c:a pcm_s16le output.wav
 
 C++ порт Whisper с Metal-бэкендом. На M1-M4 запускается через Apple GPU, примерно в 5-10 раз быстрее CPU-версии.
 
-Флаги в KT Recorder:
+Флаги в Saqta:
 - `-m MODEL` — путь к модели
 - `-l ru` — язык форсом
 - `-f audio.wav` — входной файл
@@ -110,11 +110,11 @@ Mac-native уведомления через Notification Center. Поддерж
 
 ```
 ~/
-├── bin/kt-recorder/                    # Скрипты (копии из репы)
+├── bin/saqta/                    # Скрипты (копии из репы)
 │   ├── auto-transcribe.sh
 │   ├── transcribe-file.sh
 │   └── launchagents/
-├── .config/kt-recorder/
+├── .config/saqta/
 │   └── config.sh                       # Пользовательский конфиг
 ├── whisper-models/
 │   └── ggml-large-v3.bin               # Модели
@@ -125,7 +125,7 @@ Mac-native уведомления через Notification Center. Поддерж
 │       ├── meeting_2026-04-22_14-30.md
 │       └── _transcript.vtt
 └── Library/LaunchAgents/
-    └── com.ktrecorder.autotranscribe.plist
+    └── com.saqta.autotranscribe.plist
 ```
 
 ## Известные ограничения

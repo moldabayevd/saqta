@@ -8,7 +8,7 @@
 
 ## 🇷🇺 Версия
 
-🧪 На прошлой неделе зарелизил KT Recorder. Сегодня — почему я **не** взял топовый Qwen3.5-Omni-Plus и оставил локальный Whisper.
+🧪 На прошлой неделе зарелизил Saqta. Сегодня — почему я **не** взял топовый Qwen3.5-Omni-Plus и оставил локальный Whisper.
 
 TL;DR: 96.7% сходство при 0$ vs $0.30 на встречу. Дельта 3.3% — мусор после саммари.
 
@@ -49,7 +49,7 @@ TL;DR: 96.7% сходство при 0$ vs $0.30 на встречу. Дельт
 ❌ Qwen3-ASR-1.7B локально на M4 Pro — в 8-10 раз медленнее whisper.cpp (50 мин vs 5 мин на час). Качество между, скорость не оправдывает.
 ❌ qwen3:14b как локальный саммаризатор через Ollama — context truncation отъедала половину встречи
 
-Полный research: https://github.com/moldabayevd/kt-recorder/blob/main/docs/research-qwen3.5-omni.md
+Полный research: https://github.com/moldabayevd/saqta/blob/main/docs/research-qwen3.5-omni.md
 
 Главный takeaway: **бенчмарк на чужом датасете ≠ работает на твоих данных**. На LMSys Arena Qwen3.5-Omni красавчик, на твоей часовой встрече разница в шум.
 
@@ -59,7 +59,7 @@ TL;DR: 96.7% сходство при 0$ vs $0.30 на встречу. Дельт
 
 ## 🇬🇧 EN
 
-🧪 Last week I released KT Recorder. Today — why I **didn't** use top-tier Qwen3.5-Omni-Plus and stuck with local Whisper.
+🧪 Last week I released Saqta. Today — why I **didn't** use top-tier Qwen3.5-Omni-Plus and stuck with local Whisper.
 
 TL;DR: 96.7% similarity at $0 vs $0.30 per meeting. The 3.3% delta is noise after summarization.
 
@@ -99,7 +99,7 @@ For routine meetings Whisper-russian + vocab = ~97% of the job for **free**. The
 ❌ Qwen3-ASR-1.7B locally on M4 Pro — 8-10x slower than whisper.cpp
 ❌ qwen3:14b as local summarizer via Ollama — context truncation issues
 
-Full research: https://github.com/moldabayevd/kt-recorder/blob/main/docs/research-qwen3.5-omni.md
+Full research: https://github.com/moldabayevd/saqta/blob/main/docs/research-qwen3.5-omni.md
 
 Main takeaway: **benchmark on someone else's dataset ≠ works on yours**. On LMSys Arena Qwen3.5-Omni is great. On your 1-hour meeting the difference is noise.
 

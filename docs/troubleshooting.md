@@ -15,29 +15,29 @@ macOS 13+ требует отдельного разрешения на захв
 Проверь логи:
 
 ```bash
-tail -f /tmp/kt-recorder.log
-tail -f /tmp/kt-recorder.err
+tail -f /tmp/saqta.log
+tail -f /tmp/saqta.err
 ```
 
 ### Типичные причины
 
-**`command not found: whisper-cli`** — LaunchAgent не видит путь к Homebrew. Проверь `install-launchagent.sh` — там автоопределение `/opt/homebrew/bin` vs `/usr/local/bin`. Если у тебя нестандартная установка — поправь `EnvironmentVariables` в `~/Library/LaunchAgents/com.ktrecorder.autotranscribe.plist`.
+**`command not found: whisper-cli`** — LaunchAgent не видит путь к Homebrew. Проверь `install-launchagent.sh` — там автоопределение `/opt/homebrew/bin` vs `/usr/local/bin`. Если у тебя нестандартная установка — поправь `EnvironmentVariables` в `~/Library/LaunchAgents/com.saqta.autotranscribe.plist`.
 
-**Watcher запущен, но не реагирует** — возможно, QuickRecorder сохраняет в другую папку. Проверь `RECORDINGS_DIR` в `~/.config/kt-recorder/config.sh` и реальный путь в настройках QuickRecorder.
+**Watcher запущен, но не реагирует** — возможно, QuickRecorder сохраняет в другую папку. Проверь `RECORDINGS_DIR` в `~/.config/saqta/config.sh` и реальный путь в настройках QuickRecorder.
 
 **Файлы сохраняются в подпапки** — watcher по дизайну игнорирует изменения в подпапках (там уже обработанные встречи). Если QuickRecorder пишет в подпапку — настрой его на плоскую структуру, либо измени логику фильтрации в `auto-transcribe.sh`.
 
 ### Перезапуск watcher
 
 ```bash
-launchctl kickstart -k gui/$(id -u)/com.ktrecorder.autotranscribe
+launchctl kickstart -k gui/$(id -u)/com.saqta.autotranscribe
 ```
 
 Или полностью:
 
 ```bash
-launchctl unload ~/Library/LaunchAgents/com.ktrecorder.autotranscribe.plist
-launchctl load ~/Library/LaunchAgents/com.ktrecorder.autotranscribe.plist
+launchctl unload ~/Library/LaunchAgents/com.saqta.autotranscribe.plist
+launchctl load ~/Library/LaunchAgents/com.saqta.autotranscribe.plist
 ```
 
 ## Транскрипт — бред
@@ -49,7 +49,7 @@ launchctl load ~/Library/LaunchAgents/com.ktrecorder.autotranscribe.plist
 **Галлюцинации в тишине** («Спасибо за просмотр» и т.п.) — известная проблема Whisper, он обучался на YouTube-субтитрах. Решения:
 
 1. Использовать fine-tune под русский (`antony66/whisper-large-v3-russian`) — в нём галлюцинаций намного меньше
-2. Добавить VAD в whisper-cli: открой `~/bin/kt-recorder/auto-transcribe.sh` и дополни вызов флагом `--vad --vad-model ~/whisper-models/ggml-silero-v5.1.2.bin`. Модель VAD скачивается с [HuggingFace](https://huggingface.co/ggerganov/whisper.cpp/blob/main/ggml-silero-v5.1.2.bin).
+2. Добавить VAD в whisper-cli: открой `~/bin/saqta/auto-transcribe.sh` и дополни вызов флагом `--vad --vad-model ~/whisper-models/ggml-silero-v5.1.2.bin`. Модель VAD скачивается с [HuggingFace](https://huggingface.co/ggerganov/whisper.cpp/blob/main/ggml-silero-v5.1.2.bin).
 
 ## Транскрибация медленная
 
@@ -94,17 +94,17 @@ terminal-notifier -title "Test" -message "Hello" -sound Glass
 ps aux | grep auto-transcribe
 
 # Логи в реальном времени
-tail -f /tmp/kt-recorder.log /tmp/kt-recorder.err
+tail -f /tmp/saqta.log /tmp/saqta.err
 
 # Статус LaunchAgent
-launchctl list | grep ktrecorder
+launchctl list | grep saqta
 ```
 
 ## Полный сброс
 
 ```bash
 # Убить watcher
-launchctl unload ~/Library/LaunchAgents/com.ktrecorder.autotranscribe.plist
+launchctl unload ~/Library/LaunchAgents/com.saqta.autotranscribe.plist
 
 # Снести всё
 ./uninstall.sh

@@ -31,12 +31,12 @@ NUM_SPEAKERS="${3:-}"
 [ -f "$AUDIO" ] || { echo "✗ Аудио не найдено: $AUDIO" >&2; exit 1; }
 [ -f "$VTT" ]   || { echo "✗ VTT не найден: $VTT" >&2; exit 1; }
 
-CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
+CONFIG_FILE="$HOME/.config/saqta/config.sh"
 # shellcheck disable=SC1090
 [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 
-VENV_DIR="$HOME/.config/kt-recorder/.pyannote-venv"
-DIARIZE_SCRIPT="$HOME/.config/kt-recorder/diarize.py"
+VENV_DIR="$HOME/.config/saqta/.pyannote-venv"
+DIARIZE_SCRIPT="$HOME/.config/saqta/diarize.py"
 
 [ -d "$VENV_DIR" ] || { echo "✗ Pyannote не установлен. bash scripts/setup-pyannote.sh" >&2; exit 1; }
 [ -n "${HF_TOKEN:-}" ] || { echo "✗ HF_TOKEN не задан" >&2; exit 1; }

@@ -22,8 +22,8 @@ Usage: $(basename "$0") <file.md> [--format pdf|docx|html] [--output <path>]
   brew install --cask basictex   # для PDF (~80 MB вместо 4 GB mactex)
 
 Шаблоны (опционально):
-  ~/.config/kt-recorder/export/template.tex      # для PDF
-  ~/.config/kt-recorder/export/reference.docx    # для DOCX (стили)
+  ~/.config/saqta/export/template.tex      # для PDF
+  ~/.config/saqta/export/reference.docx    # для DOCX (стили)
 EOF
     exit 1
 fi
@@ -50,7 +50,7 @@ command -v pandoc >/dev/null || {
 
 [ -z "$OUTPUT" ] && OUTPUT="${INPUT%.md}.$FORMAT"
 
-EXPORT_CONFIG="$HOME/.config/kt-recorder/export"
+EXPORT_CONFIG="$HOME/.config/saqta/export"
 PDF_TEMPLATE="$EXPORT_CONFIG/template.tex"
 DOCX_REFERENCE="$EXPORT_CONFIG/reference.docx"
 

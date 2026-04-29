@@ -58,7 +58,7 @@ body:
   - type: input
     id: kt-version
     attributes:
-      label: Версия KT Recorder
+      label: Версия Saqta
       description: Из `git log -1` или тэга
       placeholder: "0.1.0 / commit abc123"
     validations:
@@ -68,10 +68,10 @@ body:
     id: logs
     attributes:
       label: Логи
-      description: Выхлоп из `/tmp/kt-recorder.log` и `/tmp/kt-recorder.err`
+      description: Выхлоп из `/tmp/saqta.log` и `/tmp/saqta.err`
       render: shell
       placeholder: |
-        $ tail -30 /tmp/kt-recorder.err
+        $ tail -30 /tmp/saqta.err
         ...
 
   - type: textarea

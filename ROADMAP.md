@@ -1,4 +1,4 @@
-# 🗺️ KT Recorder Roadmap
+# 🗺️ Saqta Roadmap
 
 Дорожная карта проекта. Главная цель — забрать все хорошие фичи у конкурентов
 (особенно [Meetily](https://github.com/Zackriya-Solutions/meetily)),
@@ -119,7 +119,7 @@ HackerNews, Product Hunt, r/macapps.
 - [ ] English
 
 ### Distribution
-- [ ] Homebrew tap: `brew install moldabayevd/tap/kt-recorder`
+- [ ] Homebrew tap: `brew install moldabayevd/tap/saqta`
 - [ ] Подписанный DMG (нужен Apple Developer account, $99/год)
 - [ ] MSI-installer для Windows
 - [ ] AppImage / .deb / .rpm для Linux
@@ -168,7 +168,7 @@ HackerNews, Product Hunt, r/macapps.
 - **Telegram-бот** — отправил голосовуху → получил текстовый протокол
 - **Mobile companion** — iOS/Android приложение для записи через телефон,
   обработка на маке (синк через iCloud / Syncthing)
-- **MCP server** — kt-recorder как MCP-source для Claude Desktop / Zed,
+- **MCP server** — saqta как MCP-source для Claude Desktop / Zed,
   чтобы AI мог напрямую читать твои встречи
 - **Slack / Telegram интеграция** — автопостинг саммари в канал
 - **Calendar integration** — создаёт `.md` заранее с участниками из
@@ -191,7 +191,7 @@ HackerNews, Product Hunt, r/macapps.
 
 ## Чем мы лучше Meetily после v0.5
 
-| Фича | Meetily Free | Meetily PRO ($) | KT Recorder v0.5 |
+| Фича | Meetily Free | Meetily PRO ($) | Saqta v0.5 |
 |---|---|---|---|
 | Native UI | ✅ | ✅ | ✅ |
 | Live transcription | ✅ | ✅ | ✅ |

@@ -9,7 +9,7 @@
 
 ## 🇷🇺 Версия на русском
 
-🚀 Зарелизил **KT Recorder v0.1** — open-source локальный транскрайбер встреч для macOS с поддержкой казахского языка и kk/ru code-switching.
+🚀 Зарелизил **Saqta v0.1** — open-source локальный транскрайбер встреч для macOS с поддержкой казахского языка и kk/ru code-switching.
 
 Контекст: устал платить $20/мес за Otter и каждый раз гадать "а сейчас он передаст слова Марата в облако или нет?". Особенно когда встреча на смеси казахского и русского — большинство облачных решений казахский **вообще не понимают**.
 
@@ -29,7 +29,7 @@
 - Qwen3.5-Omni-Plus (DashScope API, $0.30): 96.7% сходство
 - Разница 3.3% — не оправдывает деньги для рутинных встреч
 
-GitHub: https://github.com/moldabayevd/kt-recorder
+GitHub: https://github.com/moldabayevd/saqta
 
 В планах (см. ROADMAP):
 🔜 Tauri native UI вместо терминала (v0.2)
@@ -45,7 +45,7 @@ GitHub: https://github.com/moldabayevd/kt-recorder
 
 ## 🇬🇧 English version
 
-🚀 Released **KT Recorder v0.1** — open-source local meeting transcriber for macOS with native Kazakh language and kk/ru code-switching support.
+🚀 Released **Saqta v0.1** — open-source local meeting transcriber for macOS with native Kazakh language and kk/ru code-switching support.
 
 Context: I got tired of paying $20/month for Otter and wondering each time "is it sending Marat's words to the cloud right now?". Especially when meetings happen in mixed Kazakh and Russian — most cloud solutions **don't understand Kazakh at all**.
 
@@ -65,7 +65,7 @@ In 3 days I built my own pipeline on bash + whisper.cpp:
 - Qwen3.5-Omni-Plus (DashScope API, $0.30): 96.7% similarity
 - 3.3% delta — not worth the cash for routine meetings
 
-GitHub: https://github.com/moldabayevd/kt-recorder
+GitHub: https://github.com/moldabayevd/saqta
 
 Roadmap:
 🔜 Tauri native UI instead of terminal (v0.2)
@@ -81,7 +81,7 @@ If you work in Central Asia and your transcriber doesn't speak Kazakh — try it
 
 ## 🇰🇿 Қазақша нұсқа (черновик, нужна редактура носителя)
 
-🚀 **KT Recorder v0.1** жарияладым — macOS үшін ашық кодты, локалды
+🚀 **Saqta v0.1** жарияладым — macOS үшін ашық кодты, локалды
 жиналыс транскрайбері. Қазақша және қазақша-орысша аралас сөйлеуді (code-switching)
 қолдайды.
 
@@ -99,7 +99,7 @@ Otter сияқты бұлтты сервистерге айына $20 төлеу
 
 100% локалды. Бұлт жоқ. Жазылым жоқ.
 
-GitHub: https://github.com/moldabayevd/kt-recorder
+GitHub: https://github.com/moldabayevd/saqta
 
 Қазақстанда жұмыс істейтіндер үшін — байқап көріңіз, пікір жазыңыз.
 
@@ -109,10 +109,10 @@ GitHub: https://github.com/moldabayevd/kt-recorder
 
 ## 📸 Что приложить к посту
 
-1. **Скриншот** TUI-меню `kt` со списком записей и статусами
+1. **Скриншот** TUI-меню `saqta` со списком записей и статусами
 2. **GIF**: запуск меню → выбор записи → спиннер транскрибации → готовый .md в Obsidian (15-20 сек)
 3. **Скриншот** результирующего .md в Obsidian с frontmatter и структурой
-4. (опц) **Скриншот** сравнительной таблицы из ROADMAP «Meetily vs KT Recorder»
+4. (опц) **Скриншот** сравнительной таблицы из ROADMAP «Meetily vs Saqta»
 
 ## 💡 Тактика
 

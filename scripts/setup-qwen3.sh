@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 # setup-qwen3.sh — установка Qwen3-ASR для казахско-русских встреч.
-# Ставит зависимости в venv и кладёт рабочий скрипт в ~/.config/kt-recorder/qwen3_asr.py
+# Ставит зависимости в venv и кладёт рабочий скрипт в ~/.config/saqta/qwen3_asr.py
 #
 # Требования: Python 3.10+, Apple Silicon (для MLX-ускорения). Работает и на CPU.
 
 set -euo pipefail
 
-VENV_DIR="$HOME/.config/kt-recorder/.qwen3-venv"
-SCRIPT_OUT="$HOME/.config/kt-recorder/qwen3_asr.py"
+VENV_DIR="$HOME/.config/saqta/.qwen3-venv"
+SCRIPT_OUT="$HOME/.config/saqta/qwen3_asr.py"
 
 mkdir -p "$(dirname "$SCRIPT_OUT")"
 
@@ -29,7 +29,7 @@ pip install --quiet \
 cat > "$SCRIPT_OUT" << 'PYEOF'
 #!/usr/bin/env python3
 """
-qwen3_asr.py — обёртка над Qwen3-ASR для kt-recorder.
+qwen3_asr.py — обёртка над Qwen3-ASR для saqta.
 
 Вход:  wav 16kHz mono
 Выход: plain text в stdout
@@ -102,7 +102,7 @@ echo "  скрипт:  $SCRIPT_OUT"
 echo ""
 echo "Первый запуск скачает модель Qwen3-ASR-1.7B (~4 GB) в ~/.cache/huggingface"
 echo ""
-echo "Пропиши в ~/.config/kt-recorder/config.sh:"
+echo "Пропиши в ~/.config/saqta/config.sh:"
 echo "  KK_BACKEND=\"qwen3\""
 echo "  QWEN3_ASR_SCRIPT=\"$SCRIPT_OUT\""
 echo ""

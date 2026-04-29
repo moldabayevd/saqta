@@ -6,8 +6,8 @@
 
 ```bash
 cd ~/Projects   # или куда удобно
-git clone https://github.com/moldabayevd/kt-recorder.git
-cd kt-recorder
+git clone https://github.com/moldabayevd/saqta.git
+cd saqta
 ```
 
 ## 2. Настроить git (если ещё не)
@@ -45,7 +45,7 @@ cd ~/whisper.cpp && make -j && bash ./models/download-ggml-model.sh large-v3
 ## 4. Запустить установщик проекта
 
 ```bash
-cd ~/Projects/kt-recorder
+cd ~/Projects/saqta
 ./install.sh
 ```
 
@@ -101,7 +101,7 @@ bash scripts/setup-qwen3.sh
 
 ```
 1. Записал встречу через ⌘⇧R (QuickRecorder, как обычно)
-2. Двойной клик по "KT Recorder" на рабочем столе
+2. Двойной клик по "Saqta" на рабочем столе
 3. Выбираешь запись из списка (со статусами 🔴 raw / 🟡 transcribed / 🟢 summarized)
 4. → запускается магия со спиннерами
 5. Готово — открываешь результат в Finder
@@ -141,9 +141,9 @@ bash launchagents/uninstall-launchagent.sh
 ### CLI-режим (для автоматизации)
 
 ```bash
-./scripts/kt full ~/Recordings/meeting.mp4    # полный пайплайн
-./scripts/kt transcribe ~/Recordings/meeting.mp4
-./scripts/kt summarize ~/Recordings/meeting.md
+./scripts/saqta full ~/Recordings/meeting.mp4    # полный пайплайн
+./scripts/saqta transcribe ~/Recordings/meeting.mp4
+./scripts/saqta summarize ~/Recordings/meeting.md
 ```
 
 ## 📝 Саммаризация встреч
@@ -189,7 +189,7 @@ ANTHROPIC_API_KEY="sk-ant-..."
 
 ## 🔗 Полезные ссылки
 
-- Репо: https://github.com/moldabayevd/kt-recorder
+- Репо: https://github.com/moldabayevd/saqta
 - Архитектура: [docs/architecture.md](docs/architecture.md)
 - Траблшутинг: [docs/troubleshooting.md](docs/troubleshooting.md)
 - whisper.cpp: https://github.com/ggml-org/whisper.cpp

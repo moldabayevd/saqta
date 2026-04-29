@@ -24,16 +24,16 @@ LANG="${2:-kk}"
 
 [ -f "$INPUT" ] || { echo "✗ Файл не найден: $INPUT" >&2; exit 1; }
 
-CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
+CONFIG_FILE="$HOME/.config/saqta/config.sh"
 # shellcheck disable=SC1090
 [ -f "$CONFIG_FILE" ] && source "$CONFIG_FILE"
 
 : "${KK_BACKEND:=qwen3}"
-: "${QWEN3_ASR_SCRIPT:=$HOME/.config/kt-recorder/qwen3_asr.py}"
+: "${QWEN3_ASR_SCRIPT:=$HOME/.config/saqta/qwen3_asr.py}"
 : "${WHISPER_KK_MODEL:=$HOME/whisper-models/ggml-base-kk.bin}"
 : "${WHISPER_MODEL:=$HOME/whisper-models/ggml-large-v3.bin}"
 : "${VAD_MODEL:=$HOME/whisper-models/ggml-silero-v5.1.2.bin}"
-: "${PROMPT_FILE:=$HOME/.config/kt-recorder/prompt.txt}"
+: "${PROMPT_FILE:=$HOME/.config/saqta/prompt.txt}"
 
 basename=$(basename "$INPUT")
 name="${basename%.*}"
@@ -103,7 +103,7 @@ date_iso=$(date '+%Y-%m-%d')
     echo "---"
     echo "title: \"$name\""
     echo "date: $date_iso"
-    echo "source: kt-recorder"
+    echo "source: saqta"
     echo "language: $LANG"
     echo "backend: $KK_BACKEND"
     echo "tags:"

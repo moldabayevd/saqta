@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Прежде чем задавать вопрос — посмотри [FAQ](https://github.com/YOUR_USERNAME/kt-recorder-with-stt#-faq) и [docs/troubleshooting.md](../blob/main/docs/troubleshooting.md).
+        Прежде чем задавать вопрос — посмотри [FAQ](https://github.com/YOUR_USERNAME/saqta-with-stt#-faq) и [docs/troubleshooting.md](../blob/main/docs/troubleshooting.md).
 
   - type: textarea
     id: question

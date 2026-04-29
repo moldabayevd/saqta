@@ -1,6 +1,6 @@
 # Кастомные модели Whisper
 
-По умолчанию KT Recorder использует `ggml-large-v3.bin` — универсальную модель от OpenAI. Для улучшения качества на конкретных языках, доменах или ускорения можно подключить другую.
+По умолчанию Saqta использует `ggml-large-v3.bin` — универсальную модель от OpenAI. Для улучшения качества на конкретных языках, доменах или ускорения можно подключить другую.
 
 ## Официальные ggml-модели
 
@@ -21,7 +21,7 @@ cd ~/whisper-models
 curl -L -O https://huggingface.co/ggerganov/whisper.cpp/resolve/main/MODEL_NAME.bin
 ```
 
-Потом в `~/.config/kt-recorder/config.sh`:
+Потом в `~/.config/saqta/config.sh`:
 
 ```bash
 WHISPER_MODEL="$HOME/whisper-models/MODEL_NAME.bin"
@@ -48,12 +48,12 @@ WHISPER_MODEL="$HOME/whisper-models/ggml-large-v3-russian.bin"
 Перезапусти watcher:
 
 ```bash
-launchctl kickstart -k gui/$(id -u)/com.ktrecorder.autotranscribe
+launchctl kickstart -k gui/$(id -u)/com.saqta.autotranscribe
 ```
 
 ## Другие языки
 
-В `~/.config/kt-recorder/config.sh` меняешь `WHISPER_LANG`:
+В `~/.config/saqta/config.sh` меняешь `WHISPER_LANG`:
 
 - `en` — английский
 - `de` — немецкий
@@ -89,8 +89,8 @@ kk / mix / tt / ky / uz  → transcribe-kk.sh  (Qwen3-ASR или whisper-base.kk
 
 ```bash
 bash scripts/setup-qwen3.sh
-# поставит venv в ~/.config/kt-recorder/.qwen3-venv
-# и qwen3_asr.py в ~/.config/kt-recorder/
+# поставит venv в ~/.config/saqta/.qwen3-venv
+# и qwen3_asr.py в ~/.config/saqta/
 
 # в config.sh:
 KK_BACKEND="qwen3"
