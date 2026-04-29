@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { invoke } from "@tauri-apps/api/core";
   import {
     listRecordings,
     getConfig,
@@ -8,6 +9,9 @@
   } from "./lib/api";
   import { HEADER, EMPTY_STATE } from "./lib/strings";
   import RecordingCard from "./lib/Recording.svelte";
+  import Widget from "./lib/Widget.svelte";
+
+  let widgetMode: boolean | null = null;
 
   let recordings: Recording[] = [];
   let config: Config | null = null;
@@ -27,17 +31,30 @@
     }
   }
 
-  onMount(reload);
+  onMount(async () => {
+    try {
+      widgetMode = await invoke<boolean>("is_widget_mode");
+    } catch {
+      widgetMode = false;
+    }
+    if (!widgetMode) await reload();
+  });
 
-  // Открываем нативные macOS-настройки QuickRecorder через osascript
-  // (запускает приложение если установлено, иначе показывает подсказку)
-  function openQuickRecorder() {
-    // Используем встроенный в браузер протокол openURL
-    // (Tauri-плагин shell открывает приложения)
-    window.open("quickrecorder://", "_self");
+  async function openQuickRecorder() {
+    try {
+      await invoke("start_quick_recorder");
+    } catch {
+      // Fallback на URL-схему если приложения нет
+      window.open("quickrecorder://", "_self");
+    }
   }
 </script>
 
+{#if widgetMode === null}
+  <!-- Ничего не показываем пока не определились с режимом -->
+{:else if widgetMode}
+  <Widget />
+{:else}
 <main>
   <header>
     <div class="brand">
@@ -149,6 +166,7 @@
     </section>
   {/if}
 </main>
+{/if}
 
 <style>
   :global(:root) {

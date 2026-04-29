@@ -295,6 +295,44 @@ fn open_in_finder(path: String) -> Result<(), String> {
     Ok(())
 }
 
+/// Был ли Saqta запущен в режиме виджета?
+/// meeting-detector передаёт `--widget` через open -a Saqta --args --widget
+#[tauri::command]
+fn is_widget_mode() -> bool {
+    std::env::args().any(|a| a == "--widget")
+}
+
+/// Какой источник встречи был обнаружен (Zoom / Teams / Google Meet)
+#[tauri::command]
+fn meeting_source() -> String {
+    for arg in std::env::args() {
+        if let Some(rest) = arg.strip_prefix("--source=") {
+            return rest.to_string();
+        }
+    }
+    "встрече".to_string()
+}
+
+/// Запустить QuickRecorder для начала записи
+#[tauri::command]
+fn start_quick_recorder() -> Result<(), String> {
+    Command::new("open")
+        .args(["-a", "QuickRecorder"])
+        .spawn()
+        .map_err(|e| format!("Не удалось открыть QuickRecorder: {}", e))?;
+    Ok(())
+}
+
+/// Поставить cooldown — пользователь нажал «Не записывать», 2 минуты не дёргаем
+#[tauri::command]
+fn dismiss_widget() -> Result<(), String> {
+    Command::new("touch")
+        .arg("/tmp/saqta-meeting-cooldown")
+        .spawn()
+        .map_err(|e| e.to_string())?;
+    Ok(())
+}
+
 // ─── Entry point ─────────────────────────────────────────────────────────
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -310,7 +348,40 @@ pub fn run() {
             summarize,
             export_file,
             open_in_finder,
+            is_widget_mode,
+            meeting_source,
+            start_quick_recorder,
+            dismiss_widget,
         ])
+        .setup(|app| {
+            // Если запущены с --widget, превращаем главное окно в маленькую
+            // floating-плашку: убираем декорации, фиксируем размер,
+            // прижимаем к верхнему правому углу, всегда сверху.
+            let widget_mode = std::env::args().any(|a| a == "--widget");
+            if widget_mode {
+                use tauri::{LogicalPosition, LogicalSize, Manager};
+                if let Some(window) = app.get_webview_window("main") {
+                    let _ = window.set_decorations(false);
+                    let _ = window.set_always_on_top(true);
+                    let _ = window.set_resizable(false);
+                    let _ = window.set_size(LogicalSize::new(360.0, 140.0));
+
+                    // Позиционирование: верх-право, отступ от края 20px
+                    if let Ok(monitor) = window.current_monitor() {
+                        if let Some(m) = monitor {
+                            let scale = m.scale_factor();
+                            let screen = m.size();
+                            let w = (screen.width as f64) / scale;
+                            let _ = window.set_position(LogicalPosition::new(
+                                w - 360.0 - 20.0,
+                                40.0,
+                            ));
+                        }
+                    }
+                }
+            }
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
