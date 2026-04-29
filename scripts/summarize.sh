@@ -17,19 +17,49 @@ set -euo pipefail
 
 if [ $# -eq 0 ]; then
     cat << EOF
-Usage: $(basename "$0") <meeting.md> [output.md]
+Usage: $(basename "$0") <meeting.md> [output.md] [--template <name>]
 
 Конфиг в ~/.config/kt-recorder/config.sh:
   SUMMARIZER_BACKEND  — ollama | claude (по умолчанию: ollama)
   SUMMARIZER_MODEL    — для ollama: qwen3:32b / qwen3:14b / gemma3:27b / ...
                         для claude: claude-sonnet-4-5 / claude-opus-4-7
   ANTHROPIC_API_KEY   — если backend=claude
+  SUMMARIZER_TEMPLATE — protocol | 1on1 | interview | lecture | kazakh-formal
+                        (по умолчанию: protocol)
+
+Шаблоны лежат в \$REPO/templates/<name>.txt или
+~/.config/kt-recorder/templates/<name>.txt (приоритет — пользовательский).
 EOF
     exit 1
 fi
 
-INPUT="$1"
-OUTPUT="${2:-${INPUT%.md}-summary.md}"
+# Парсим аргументы
+INPUT=""
+OUTPUT=""
+TEMPLATE_OVERRIDE=""
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --template)
+            TEMPLATE_OVERRIDE="$2"
+            shift 2
+            ;;
+        --template=*)
+            TEMPLATE_OVERRIDE="${1#*=}"
+            shift
+            ;;
+        *)
+            if [ -z "$INPUT" ]; then
+                INPUT="$1"
+            elif [ -z "$OUTPUT" ]; then
+                OUTPUT="$1"
+            fi
+            shift
+            ;;
+    esac
+done
+
+[ -z "$OUTPUT" ] && OUTPUT="${INPUT%.md}-summary.md"
 
 [ -f "$INPUT" ] || { echo "✗ Файл не найден: $INPUT" >&2; exit 1; }
 
@@ -40,11 +70,32 @@ CONFIG_FILE="$HOME/.config/kt-recorder/config.sh"
 : "${SUMMARIZER_BACKEND:=ollama}"
 : "${SUMMARIZER_MODEL:=qwen3:32b}"
 : "${SUMMARIZER_PROMPT_FILE:=$HOME/.config/kt-recorder/summarize_prompt.txt}"
+: "${SUMMARIZER_TEMPLATE:=protocol}"
 
-# Если кастомного промпта нет — используем встроенный (ниже в heredoc)
+# Override из CLI
+[ -n "$TEMPLATE_OVERRIDE" ] && SUMMARIZER_TEMPLATE="$TEMPLATE_OVERRIDE"
+
+# Поиск шаблона: сначала пользовательская папка, потом репо
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_TEMPLATES="$SCRIPT_DIR/../templates"
+USER_TEMPLATES="$HOME/.config/kt-recorder/templates"
+
+TEMPLATE_FILE=""
+if [ -f "$USER_TEMPLATES/$SUMMARIZER_TEMPLATE.txt" ]; then
+    TEMPLATE_FILE="$USER_TEMPLATES/$SUMMARIZER_TEMPLATE.txt"
+elif [ -f "$REPO_TEMPLATES/$SUMMARIZER_TEMPLATE.txt" ]; then
+    TEMPLATE_FILE="$REPO_TEMPLATES/$SUMMARIZER_TEMPLATE.txt"
+fi
+
+# Приоритет: явный SUMMARIZER_PROMPT_FILE > шаблон > встроенный
 if [ -f "$SUMMARIZER_PROMPT_FILE" ] && [ -s "$SUMMARIZER_PROMPT_FILE" ]; then
     SYSTEM_PROMPT=$(cat "$SUMMARIZER_PROMPT_FILE")
+    echo "→ Промпт: $SUMMARIZER_PROMPT_FILE (override)"
+elif [ -n "$TEMPLATE_FILE" ]; then
+    SYSTEM_PROMPT=$(cat "$TEMPLATE_FILE")
+    echo "→ Шаблон: $SUMMARIZER_TEMPLATE ($TEMPLATE_FILE)"
 else
+    echo "→ Шаблон: встроенный (protocol fallback)"
     SYSTEM_PROMPT=$(cat << 'PROMPT'
 Ты — опытный ассистент, превращающий сырые транскрипты встреч
 в структурированные протоколы для Obsidian / корпоративных вики.
